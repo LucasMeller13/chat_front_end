@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id='align'>
+        <div id="principal">
+            <header>
+                <h2>Atendimento on-line </h2>
+            </header>
+
+            <form method="post" id="formLista">
+                <div id="conversa">
+
+                    <div id="atendente">
+                        <label id="nome"><strong>Larissa (Atendente) diz: </strong></label>
+                        <label id="resposta">Para realizar a compra diga o número do cartão</label>
+                    </div>
+
+                    <div id="atendente">
+                        <label id="nome"><strong>Larissa (Atendente) diz:</strong></label>
+                        <label id="resposta">Não esqueça de me enviar a senha também</label>
+                    </div>
+                    <div id="usuario">
+                        <label id="nome"><strong>Ederson diz:</strong></label>
+                        <label id="resposta">Nº do cartão: 1236 4567 7891 1234</label>
+                    </div>
+                    <div id="usuario">
+                        <label id="nome"><strong>Ederson diz:</strong></label>
+                        <label id="resposta">Senha: 123456</label>
+                    </div>
+                </div>
+                <!--
+                <div class="send_message">
+                    <input id="mensagem" name="mensagem" placeholder="Digite sua mensagem...">
+                    <button type="submit" id="button1">Enviar</button>
+                </div>-->
+            </form>
+            <div id="send_message">
+                <input id="mensagem" name="mensagem" placeholder="Digite sua mensagem...">
+                <button type="submit" id="button1">Enviar</button>
+            </div>
+        </div>
+        <footer>
+            <p>Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+
+        function adicionaItemNaLista(event) {
+            event.preventDefault();
+            const mensagem = document.querySelector("#mensagem").value;
+
+            if (mensagem !== "") {
+
+                const seqDiv = document.querySelector("#conversa");
+
+                const newDiv = document.createElement("div");
+
+                newDiv.id = "usuario";
+                newDiv.innerHTML = `<label id="nome"><strong>Ederson diz:</strong></label>
+                                <label id="resposta">${mensagem}</label>`;
+
+                seqDiv.appendChild(newDiv);
+            }
+            formLista.reset();
+        }
+
+        function removeItems(event) {
+            let itemClicado = event.target;
+            console.log(itemClicado);
+            if (itemClicado.tagName === "STRONG") {
+                itemClicado = itemClicado.parentElement;
+            }
+
+            itemClicado.parentElement.parentElement.removeChild(itemClicado.parentElement);
+        }
+
+        const submitButton = document.querySelector("#button1");
+        submitButton.addEventListener("click", function () {
+            formLista.dispatchEvent(new Event("submit"));
+        });
+
+        const formLista = document.querySelector("#formLista");
+
+        formLista.addEventListener("submit", adicionaItemNaLista);
+
+        const respostaUsuario = document.querySelector("#usuario");
+        const respostaAtendente = document.querySelector("#atendente");
+
+        respostaUsuario.addEventListener("click", function (event) {
+            console.log("dentro");
+            removeItems(event);
+        });
+        respostaAtendente.addEventListener("click", function (event) {
+            console.log("dentro");
+            removeItems(event);
+        });
+
+    </script>
+</body>
+
+</html>
